@@ -37,6 +37,13 @@ class Queue
     protected $recycleBin;
     
     /**
+     * 队列名称前缀
+     * 
+     * @var string
+     */
+    protected $queueNamePrefix;
+    
+    /**
      * 序列化消息
      *
      * @param Message $msg  原始消息对象
@@ -127,7 +134,19 @@ class Queue
      */
     public function getFullName()
     {
-        return 'jyz.queue.' . $this->name;
+        return $this->queueNamePrefix . $this->name;
+    }
+    
+    /**
+     * 设置名称前缀
+     * 
+     * @param string $prefix    前缀
+     * @return \LightQueueClient\Queue
+     */
+    public function setNamePrefix($prefix)
+    {
+        $this->queueNamePrefix = (string) $prefix;
+        return $this;
     }
     
     /**

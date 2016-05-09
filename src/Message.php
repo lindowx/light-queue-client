@@ -26,7 +26,7 @@ class Message
         if (! isset($this->data[$key])) {
             throw new Exception("队列消息中不存在指定属性");
         }
-        
+
         return $this->data[$key];
     }
 
@@ -79,19 +79,35 @@ class Message
     {
         $data = $this->data;
         $reflClass = new \ReflectionClass(self::class);
-        
+
         $properties = $reflClass->getProperties();
         foreach ($properties as $prop) {
             if($prop->name == 'data') {
                 continue;
             }
-            
+
             $data[$prop->name] = $this->{$prop->name};
         }
-        
+
         return json_encode($data);
     }
-    
+
+    /**
+     * 数组化
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            '__lqcmc' => static::class,
+            'refuseCount' => $this->refuseCount,
+            'data' => $this->data,
+        ];
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->toJson();

@@ -77,19 +77,7 @@ class Message
      */
     public function toJson()
     {
-        $data = $this->data;
-        $reflClass = new \ReflectionClass(self::class);
-
-        $properties = $reflClass->getProperties();
-        foreach ($properties as $prop) {
-            if($prop->name == 'data') {
-                continue;
-            }
-
-            $data[$prop->name] = $this->{$prop->name};
-        }
-
-        return json_encode($data);
+        return json_encode($this->toArray());
     }
 
     /**

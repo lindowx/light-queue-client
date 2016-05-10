@@ -1,4 +1,4 @@
-<?php
+e<?php
 
 use LightQueueClient\Queue;
 use LightQueueClient\Message;
@@ -32,3 +32,5 @@ $msg->e = 0x0001;
 
 $s_msg = Queue::messageSerialize($msg);
 var_dump($s_msg, Queue::messageUnserialize($s_msg));
+
+var_dump($msg->toJson(), Message::class);

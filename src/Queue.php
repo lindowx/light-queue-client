@@ -64,6 +64,10 @@ class Queue
     public static function messageUnserialize($serializedMsg)
     {
         $msgArr = msgpack_unpack($serializedMsg);
+        if (! isset($msgArr['__lqcmc'])) {
+            throw new \Exception('Bad message format');
+        }
+
         if ($msgArr['__lqcmc'] == Message::class) {
             $msg = new Message();
             unset($msgArr['__lqcmc']);
